@@ -1,4 +1,5 @@
 const { request, response } = require("express");
+const Usuario = require("../models/usuario");
 
 //Funciones
 
@@ -8,20 +9,25 @@ const usuariosGet = (req = request, res = response) => {
   res.json({ message: "GET usuarrios - Controllers", limit, page });
 };
 
-const usuarioPost = (req = request, res = response) => {
-  const { nombre, correo } = req.body;
-  res.json({ message: "POST usuarrios - Controllers", nombre, correo });
+const usuarioPost = async (req = request, res = response) => {
+  const { name, email, password } = req.body;
+
+  const usuario = new Usuario({ name, email, password });
+
+  await usuario.save();
+
+  res.status(201).json({ message: "Usuario creado", usuario });
 };
 
-const usuariosPut = (req = request, res = response) => {
+const usuarioPut = (req = request, res = response) => {
   const { id } = req.params;
 
   res.json({ message: "PUT usuarrios - Controllers", id });
 };
 
-const usuarioSDelete = (req, res) => {
+const usuarioDelete = (req, res) => {
   //request, response
   res.json({ message: "DELETE usuarrios - Controllers" });
 };
 
-module.exports = { usuariosGet, usuarioPost, usuariosPut, usuarioSDelete };
+module.exports = { usuariosGet, usuarioPost, usuarioPut, usuarioDelete };
