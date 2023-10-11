@@ -15,16 +15,19 @@ const usuariosGet = async (req = request, res = response) => {
     Usuario.find({ state: true }).limit(limite).skip(desde),
   ]);
 
-  //request, response
-  res.status(200).json({ total, usuarios });
+  //request , response
+  res.status(200).json({
+    total,
+    usuarios,
+  });
 };
 
-const usuarioPost = async (req = request, res = response) => {
+const usuarioPost = async (req = request, res) => {
   const { name, email, password, role } = req.body;
 
   const usuario = new Usuario({ name, email, password, role });
 
-  //validar si el email existe
+  // //validar si el email existe
   // const existeEmail = await Usuario.findOne({ email });
   // if (existeEmail) {
   //   return res.status(400).json({
@@ -43,7 +46,7 @@ const usuarioPost = async (req = request, res = response) => {
   });
 };
 
-const usuarioPut = async (req = request, res = response) => {
+const usuarioPut = async (req = request, res) => {
   const { id } = req.params;
 
   const { password, _id, email, ...resto } = req.body;
@@ -53,7 +56,10 @@ const usuarioPut = async (req = request, res = response) => {
 
   const usuario = await Usuario.findByIdAndUpdate(id, resto, { new: true });
 
-  res.status(200).json({ message: "Usuario actualizado", usuario });
+  res.status(200).json({
+    message: "Usuario actualizado",
+    usuario,
+  });
 };
 
 const usuarioDelete = async (req, res) => {
@@ -65,11 +71,21 @@ const usuarioDelete = async (req, res) => {
   //Inactivar un documento
   const usuarioBorrado = await Usuario.findByIdAndUpdate(
     id,
-    { state: false },
+    {
+      state: false,
+    },
     { new: true }
   );
 
-  res.status(200).json({ message: "Usuario eliminado", usuarioBorrado });
+  res.status(200).json({
+    message: "Usuario eliminado",
+    usuarioBorrado,
+  });
 };
 
-module.exports = { usuariosGet, usuarioPost, usuarioPut, usuarioDelete };
+module.exports = {
+  usuariosGet,
+  usuarioPost,
+  usuarioPut,
+  usuarioDelete,
+};
