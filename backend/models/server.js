@@ -14,7 +14,7 @@ class Server {
     //Middlewares globales
     this.middlewares();
 
-    //Rutas
+    //rutas
     this.routes();
   }
 
@@ -26,7 +26,7 @@ class Server {
     //CORS
     this.app.use(cors());
 
-    //Leer datos del cuerpo en formato json
+    //leer datos del cuerpo en formato json
     this.app.use(express.json());
 
     //Carpeta pública
