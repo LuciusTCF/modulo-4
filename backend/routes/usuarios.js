@@ -6,6 +6,7 @@ const {
   emailExiste,
   existeUsuarioPorId,
 } = require("../helpers/db-validators");
+
 const {
   usuariosGet,
   usuarioPost,
@@ -34,7 +35,7 @@ router.put(
   "/:id",
   [
     check("id", "No es un Id válido").isMongoId(),
-    //Validar si el id existe
+    //validar si el id existe
     check("id").custom(existeUsuarioPorId),
     check("role").custom(esRoleValido),
     validarCampos,
@@ -46,7 +47,6 @@ router.delete(
   [
     check("id", "No es un Id válido").isMongoId(),
     check("id").custom(existeUsuarioPorId),
-    // check("state").custom(),
     validarCampos,
   ],
   usuarioDelete

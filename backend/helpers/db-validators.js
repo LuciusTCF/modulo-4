@@ -12,12 +12,12 @@ const esRoleValido = async (role = "USER_ROLE") => {
 const emailExiste = async (email) => {
   const existeEmail = await Usuario.findOne({ email });
   if (existeEmail) {
-    throw new Error(`El correo ${email} ya esta registrado`);
+    throw new Error(`El correo ${email} ya está registrado`);
   }
 };
 
 const existeUsuarioPorId = async (id) => {
-  const existeUsuario = await Usuario.findById();
+  const existeUsuario = await Usuario.findById(id);
 
   if (!existeUsuario) {
     throw new Error(`El id ${id} NO existe`);
@@ -25,7 +25,7 @@ const existeUsuarioPorId = async (id) => {
 };
 
 // const stateTrue=async(state)=>{
-//   const stateValue=await Usuario.findOne({state})
+//   const stateValue= await Usuario.findOne({state})
 
 // }
 
