@@ -12,8 +12,9 @@ const UsuarioSchema = Schema({
   },
   password: {
     type: String,
-    required: [true, "La contraseña es obligatorio"],
+    required: [true, "La contraseña es obligatoria"],
   },
+
   role: {
     type: String,
     enum: ["ADMIN_ROLE", "USER_ROLE"],
@@ -27,5 +28,11 @@ const UsuarioSchema = Schema({
     default: true,
   },
 });
+
+UsuarioSchema.methods.toJSON = function () {
+  const { __v, password, _id, ...usuario } = this.toObject();
+  usuario.uid = _id;
+  return usuario;
+};
 
 module.exports = model("Usuario", UsuarioSchema);
