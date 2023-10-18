@@ -18,16 +18,14 @@ const emailExiste = async (email) => {
 
 const existeUsuarioPorId = async (id) => {
   const existeUsuario = await Usuario.findById(id);
-
   if (!existeUsuario) {
     throw new Error(`El id ${id} NO existe`);
   }
+  //Si el usuario existe verifico su estado
+  if (!existeUsuario.state) {
+    throw new Error(`El usuario ${existeUsuario.name} está inactivo`);
+  }
 };
-
-// const stateTrue=async(state)=>{
-//   const stateValue= await Usuario.findOne({state})
-
-// }
 
 module.exports = {
   esRoleValido,
