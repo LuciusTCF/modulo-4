@@ -8,8 +8,12 @@ const obtenerProductos = async (req = request, res = response) => {
 
   const [total, productos] = await Promise.all([
     Producto.countDocuments(query),
-    Producto.find(query).skip(Number(desde)).limit(Number(limite)),
-    //Como traigo los datos de los usuarios y las categorias?🤔
+    Producto.find(query)
+      .skip(Number(desde))
+      .limit(Number(limite))
+      //Como traigo los datos de los usuarios y las categorias?🤔
+      .populate("categoria", "nombre")
+      .populate("usuario", "email"),
   ]);
 
   res.json({
@@ -23,8 +27,9 @@ const obtenerProductos = async (req = request, res = response) => {
 const obtenerProducto = async (req = request, res = response) => {
   const { id } = req.params;
 
-  const producto = await Producto.findById(id);
-  //Como traigo los datos de los usuarios y las categorias?🤔
+  const producto = await Producto.findById(id)
+    .populate("categoria", "nombre")
+    .populate("usuario", "email");
 
   res.json({
     producto,
@@ -81,7 +86,13 @@ const actualizarProducto = async (req, res) => {
     data.nombre = req.body.nombre.toUpperCase();
   }
 
-  const producto = await Producto.findByIdAndUpdate(id, data, { new: true });
+  if (req.body.stock) {
+    data.stock = req.body.stock;
+  }
+
+  const producto = await Producto.findByIdAndUpdate(id, data, { new: true })
+    .populate("categoria", "nombre")
+    .populate("usuario", "email");
 
   res.status(200).json(producto);
 };
