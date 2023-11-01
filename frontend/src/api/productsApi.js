@@ -14,32 +14,32 @@ const productsList = async () => {
   return data;
 };
 
-const productAdd = async (data) => {
+const productAdd = async (datos) => {
   const resp = await fetch(url, {
     method: "POST",
-    body: JSON.stringify(data),
+    body: JSON.stringify(datos),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
       "x-token": token,
     },
   });
 
-  const dataReturn = await resp.json();
+  const data = await resp.json();
 
-  return dataReturn;
+  return data;
 };
 
-const productUpdate = async (id, data) => {
+const productUpdate = async (id, datos) => {
   const resp = await fetch(url + "/" + id, {
     method: "PUT",
-    body: JSON.stringify(data),
+    body: JSON.stringify(datos),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
       "x-token": token,
     },
   });
-  const dataReturn = await resp.json();
-  return dataReturn;
+  const data = await resp.json();
+  return data;
 };
 
 const productDelete = async (id) => {
